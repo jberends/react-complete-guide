@@ -5,28 +5,33 @@ import Person from './Person/Person'
 class App extends Component {
   state = {
     persons: [
-      {name: "Jochem", age: 33},
-      {name: "Piet", age:2},
-      {name: "Anneke", age:23}
+      { name: "Jochem", age: 33 },
+      { name: "Piet", age: 2 },
+      { name: "Anneke", age: 23 }
     ],
-    otherState: 'some other value'
+    otherState: 'some other value',
+    showPersons: true
   }
 
   switchNameHandler = (newName) => {
     // console.log('was clicked');
-    this.setState({persons: [
-      {name: "Jochem", age: 33},
-      {name: newName, age:2},
-      {name: "Anneke", age:23}
-    ]})
+    this.setState({
+      persons: [
+        { name: "Jochem", age: 33 },
+        { name: newName, age: 2 },
+        { name: "Anneke", age: 23 }
+      ]
+    })
   }
 
   nameChangedHandler = (event) => {
-    this.setState({persons: [
-      {name: "Jochem", age: 33},
-      {name: event.target.value, age:2},
-      {name: "Anneke", age:23}
-    ]})
+    this.setState({
+      persons: [
+        { name: "Jochem", age: 33 },
+        { name: event.target.value, age: 2 },
+        { name: "Anneke", age: 23 }
+      ]
+    })
   }
 
   mouseLogHandler = (props) => {
@@ -42,26 +47,35 @@ class App extends Component {
       cursor: 'pointer'
     };
 
+    let persons = null;
+
+    if (this.state.showPersons) {
+      persons = (
+        <div>
+          <Person
+            name={this.state.persons[0].name}
+            age={this.state.persons[0].age} />
+          <Person
+            name={this.state.persons[1].name}
+            age={this.state.persons[1].age} hobbies="Racing"
+            click={this.switchNameHandler.bind(this, "Pieter")}
+            changed={this.nameChangedHandler}
+          />
+          <Person
+            name={this.state.persons[2].name}
+            age={this.state.persons[2].age} />
+        </div>
+      )
+    };
     return (
       <div className="App">
         <h1>Hi, I'm a react app</h1>
         <p>This is really working!</p>
-        <button 
+        <button
           style={style}
-          onClick={(event) => this.switchNameHandler('Pietertje!!!')} 
+          onClick={(event) => this.switchNameHandler('Pietertje!!!')}
           onMouseOver={this.mouseLogHandler}>Switch Name</button>
-        <Person
-          name={this.state.persons[0].name}
-          age={this.state.persons[0].age} />
-        <Person 
-          name={this.state.persons[1].name} 
-          age={this.state.persons[1].age} hobbies="Racing" 
-          click={this.switchNameHandler.bind(this, "Pieter")}
-          changed={this.nameChangedHandler}
-          />
-        <Person 
-          name={this.state.persons[2].name} 
-          age={this.state.persons[2].age} />
+        {persons}
       </div>
     );
   }
