@@ -5,9 +5,9 @@ import Person from './Person/Person'
 class App extends Component {
   state = {
     persons: [
-      { name: "Jochem", age: 33 },
-      { name: "Piet", age: 2 },
-      { name: "Anneke", age: 23 }
+      { id: 'adas', name: "Jochem", age: 33 },
+      { id: '123s', name: "Piet", age: 2 },
+      { id: 'hgfh', name: "Anneke", age: 23 }
     ],
     otherState: 'some other value',
     showPersons: true
@@ -17,17 +17,20 @@ class App extends Component {
     // const newPersons = this.state.persons.slice();
     const newPersons = [...this.state.persons]
     newPersons.splice(personIndex, 1);
-    this.setState({persons: newPersons});
+    this.setState({ persons: newPersons });
   }
 
-  nameChangedHandler = (newName) => {
-    this.setState({
-      persons: [
-        { name: "Jochem", age: 33 },
-        { name: newName, age: 2 },
-        { name: "Anneke", age: 23 }
-      ]
-    })
+  nameChangedHandler = (event, id) => {
+    const personIndex = this.state.persons.findIndex(p => {
+      return p.id === id;
+    });
+
+    const thePerson = { ...this.state.persons[personIndex] };
+
+    thePerson.name = event.target.value;
+    const persons = [...this.state.persons];
+    persons[personIndex] = thePerson;
+    this.setState({persons: persons});
   }
 
   mouseLogHandler = (props) => {
@@ -49,11 +52,12 @@ class App extends Component {
       persons = (
         <div>
           {this.state.persons.map((person, index) => {
-            return <Person 
+            return <Person
               click={() => this.deletePersonHandler(index)}
-              name={person.name} 
+              name={person.name}
               age={person.age}
-              key={index} />
+              key={person.id}
+              changed={(event) => this.nameChangedHandler(event, person.id)} />
           }
           )}
         </div>
@@ -65,7 +69,7 @@ class App extends Component {
         <p>This is really working!</p>
         <button
           style={style}
-          onClick={(event) => this.nameChangedHandler('Pietertje!!!')}
+          // onClick={(event) => this.nameChangedHandler('Pietertje!!!')}
           onMouseOver={this.mouseLogHandler}>Switch Name</button>
         {persons}
       </div>
