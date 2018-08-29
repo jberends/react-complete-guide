@@ -13,22 +13,17 @@ class App extends Component {
     showPersons: true
   }
 
-  switchNameHandler = (newName) => {
-    // console.log('was clicked');
+  deletePersonHandler = (personIndex) => {
+    const persons = this.state.persons;
+    persons.splice(personIndex, 1);
+    this.setState({persons: persons});
+  }
+
+  nameChangedHandler = (newName) => {
     this.setState({
       persons: [
         { name: "Jochem", age: 33 },
         { name: newName, age: 2 },
-        { name: "Anneke", age: 23 }
-      ]
-    })
-  }
-
-  nameChangedHandler = (event) => {
-    this.setState({
-      persons: [
-        { name: "Jochem", age: 33 },
-        { name: event.target.value, age: 2 },
         { name: "Anneke", age: 23 }
       ]
     })
@@ -52,18 +47,14 @@ class App extends Component {
     if (this.state.showPersons) {
       persons = (
         <div>
-          <Person
-            name={this.state.persons[0].name}
-            age={this.state.persons[0].age} />
-          <Person
-            name={this.state.persons[1].name}
-            age={this.state.persons[1].age} hobbies="Racing"
-            click={this.switchNameHandler.bind(this, "Pieter")}
-            changed={this.nameChangedHandler}
-          />
-          <Person
-            name={this.state.persons[2].name}
-            age={this.state.persons[2].age} />
+          {this.state.persons.map((person, index) => {
+            return <Person 
+              click={() => this.deletePersonHandler(index)}
+              name={person.name} 
+              age={person.age}
+              key={index} />
+          }
+          )}
         </div>
       )
     };
@@ -73,7 +64,7 @@ class App extends Component {
         <p>This is really working!</p>
         <button
           style={style}
-          onClick={(event) => this.switchNameHandler('Pietertje!!!')}
+          onClick={(event) => this.nameChangedHandler('Pietertje!!!')}
           onMouseOver={this.mouseLogHandler}>Switch Name</button>
         {persons}
       </div>
