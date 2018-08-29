@@ -14,9 +14,10 @@ class App extends Component {
   }
 
   deletePersonHandler = (personIndex) => {
-    const persons = this.state.persons;
-    persons.splice(personIndex, 1);
-    this.setState({persons: persons});
+    // const newPersons = this.state.persons.slice();
+    const newPersons = [...this.state.persons]
+    newPersons.splice(personIndex, 1);
+    this.setState({persons: newPersons});
   }
 
   nameChangedHandler = (newName) => {
