@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Radium from 'radium';
+import Radium, { StyleRoot } from 'radium';
 import './App.css';
 import Person from './Person/Person'
 
@@ -31,12 +31,12 @@ class App extends Component {
     thePerson.name = event.target.value;
     const persons = [...this.state.persons];
     persons[personIndex] = thePerson;
-    this.setState({persons: persons});
+    this.setState({ persons: persons });
   }
 
   togglePersonHandler = () => {
     const show = (this.state.showPersons) ? false : true
-    this.setState( { showPersons: show })
+    this.setState({ showPersons: show })
   }
 
   mouseLogHandler = (props) => {
@@ -52,7 +52,7 @@ class App extends Component {
       cursor: 'pointer',
       border: '0px solid white',
       ':hover': {
-        backgroundColor: 'lightgreen', 
+        backgroundColor: 'lightgreen',
         color: 'black'
       }
     };
@@ -75,30 +75,32 @@ class App extends Component {
       );
       style.backgroundColor = 'red';
       style[':hover'] = {
-        backgroundColor: 'salmon', 
+        backgroundColor: 'salmon',
         color: 'black'
       }
     }
 
     const classes = [];
 
-    if (this.state.persons.length <=2 ) {
+    if (this.state.persons.length <= 2) {
       classes.push('red')
     }
-    if (this.state.persons.length <=1 ) {
+    if (this.state.persons.length <= 1) {
       classes.push('bold')
     }
 
     return (
-      <div className="App">
-        <h1>Hi, I'm a react app</h1>
-        <p className={classes.join(' ')}>This is really working!</p>
-        <button
-          style={style}
-          onClick={this.togglePersonHandler}
-          onMouseOver={this.mouseLogHandler}>Show or Hide Persons</button>
-        {persons}
-      </div>
+      <StyleRoot>
+        <div className="App">
+          <h1>Hi, I'm a react app</h1>
+          <p className={classes.join(' ')}>This is really working!</p>
+          <button
+            style={style}
+            onClick={this.togglePersonHandler}
+            onMouseOver={this.mouseLogHandler}>Show or Hide Persons</button>
+          {persons}
+        </div>
+      </StyleRoot>
     );
   }
 }
