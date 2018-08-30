@@ -19,7 +19,8 @@ class App extends Component {
         { id: 'hgfh', name: "Anneke", age: 23 }
       ],
       otherState: 'some other value',
-      showPersons: false
+      showPersons: false,
+      toggleClicked: 0
     }
   }
 
@@ -71,7 +72,12 @@ class App extends Component {
 
   togglePersonHandler = () => {
     const show = (this.state.showPersons) ? false : true
-    this.setState({ showPersons: show })
+    this.setState((prevState, props) => { 
+      return {
+        showPersons: show,
+        toggleClicked: prevState.toggleClicked +1
+      }
+    });
   }
 
   mouseLogHandler = (props) => {
