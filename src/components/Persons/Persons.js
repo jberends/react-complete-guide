@@ -20,11 +20,11 @@ class Persons extends PureComponent {
   //   console.log('[UPDATE Persons.js] Inside componentWillReceiveProps');
   // }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    console.log('[UPDATE Persons.js] ShouldComponentUpdate', nextProps, nextState);
-    return nextProps.persons !== this.props.persons;
-    // return true;
-  }
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   console.log('[UPDATE Persons.js] ShouldComponentUpdate', nextProps, nextState);
+  //   return nextProps.persons !== this.props.persons;
+  //   // return true;
+  // }
 
   // componentWillUpdate() {
   //   console.log('[UPDATE Persons.js] Inside componentWillUpdate');

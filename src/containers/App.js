@@ -1,10 +1,12 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 
 import classes from './App.css';
 import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
 
-class App extends PureComponent {
+
+
+class App extends Component {
   constructor(props) {
     super(props);
     console.log('[App.js] Inside Constructor', props)
@@ -91,7 +93,7 @@ class App extends PureComponent {
     }
 
     return (
-
+      
       <div className={classes.App}>
         <button onClick={()=> {this.setState({showPersons:true})}}>Show Persons</button>
         <Cockpit
