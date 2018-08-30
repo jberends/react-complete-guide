@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 
-import classes from './App.css';
 import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
 
+import Wrapper from '../hoc/Wrapper';
+import withClass from '../hoc/withClass';
 
+import classes from './App.css'
 
 class App extends Component {
   constructor(props) {
@@ -94,7 +96,7 @@ class App extends Component {
 
     return (
       
-      <div className={classes.App}>
+      <Wrapper>
         <button onClick={()=> {this.setState({showPersons:true})}}>Show Persons</button>
         <Cockpit
           showPersonms={this.state.showPersons}
@@ -103,10 +105,10 @@ class App extends Component {
           logger={this.mouseLogHandler}
         />
         {persons}
-      </div>
+      </Wrapper>
 
     );
   }
 }
 
-export default App;
+export default withClass(App, classes.App);
