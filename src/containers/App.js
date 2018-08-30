@@ -1,18 +1,49 @@
 import React, { Component } from 'react';
+
 import classes from './App.css';
 import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
 
 class App extends Component {
-  state = {
-    persons: [
-      { id: 'adas', name: "Jochem", age: 33 },
-      { id: '123s', name: "Piet", age: 2 },
-      { id: 'hgfh', name: "Anneke", age: 23 }
-    ],
-    otherState: 'some other value',
-    showPersons: false
+  constructor(props) {
+    super(props);
+    console.log('[App.js] Inside Constructor', props)
+    this.state = {
+      persons: [
+        { id: 'adas', name: "Jochem", age: 33 },
+        { id: '123s', name: "Piet", age: 2 },
+        { id: 'hgfh', name: "Anneke", age: 23 }
+      ],
+      otherState: 'some other value',
+      showPersons: false
+    }
   }
+
+  componentWillMount() {
+    console.log('[App.js] Inside CWM');
+  }
+
+  componentDidMount() {
+    console.log('[App.js] Inside CDM');
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log('[UPDATE App.js] Inside componentWillReceiveProps');
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log('[UPDATE App.js] ShouldComponentUpdate', nextProps, nextState);
+    return true;
+  }
+
+  componentWillUpdate() {
+    console.log('[UPDATE App.js] Inside componentWillUpdate');
+  }
+
+  componentDidUpdate() {
+    console.log('[UPDATE App.js] Inside componentDidUpdate');
+  }
+
 
   deletePersonHandler = (personIndex) => {
     // const newPersons = this.state.persons.slice();
@@ -44,13 +75,14 @@ class App extends Component {
   }
 
   render() {
-    let persons = null;
+    console.log('[App.js] Inside render()');
 
+    let persons = null;
 
     if (this.state.showPersons) {
       persons = (
         <div>
-          <Persons 
+          <Persons
             persons={this.state.persons}
             clicked={this.deletePersonHandler}
             changed={this.nameChangedHandler} />
@@ -58,17 +90,16 @@ class App extends Component {
       );
     }
 
-   
-
     return (
 
       <div className={classes.App}>
-        <Cockpit 
+        <button onClick={()=> {this.setState({showPersons:true})}}>Show Persons</button>
+        <Cockpit
           showPersonms={this.state.showPersons}
           persons={this.state.persons}
           clicked={this.togglePersonHandler}
           logger={this.mouseLogHandler}
-          />        
+        />
         {persons}
       </div>
 
