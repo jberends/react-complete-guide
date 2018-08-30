@@ -43,17 +43,8 @@ class App extends Component {
   }
 
   render() {
-    const style = {
-      backgroundColor: 'green',
-      color: 'white',
-      font: 'inherit',
-      padding: '8px',
-      cursor: 'pointer',
-      border: '0px solid white',
-
-    };
-
     let persons = null;
+    let btnClass = '';
 
     if (this.state.showPersons) {
       persons = (
@@ -69,8 +60,7 @@ class App extends Component {
           )}
         </div>
       );
-      style.backgroundColor = 'red';
-
+      btnClass = classes.Red
     }
 
     const assignedClasses =[];
@@ -88,7 +78,7 @@ class App extends Component {
         <h1>Hi, I'm a react app</h1>
         <p className={assignedClasses}>This is really working!</p>
         <button
-          style={style}
+          className={btnClass}
           onClick={this.togglePersonHandler}
           onMouseOver={this.mouseLogHandler}>Show or Hide Persons</button>
         {persons}
