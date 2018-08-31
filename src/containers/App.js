@@ -8,6 +8,8 @@ import withClass from '../hoc/withClass';
 
 import classes from './App.css'
 
+export const AuthContext = React.createContext(false);
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -20,20 +22,13 @@ class App extends Component {
       ],
       otherState: 'some other value',
       showPersons: false,
-      toggleClicked: 0
+      toggleClicked: 0,
+      authenticated: false
     }
-  }
-
-  componentWillMount() {
-    console.log('[App.js] Inside CWM');
   }
 
   componentDidMount() {
     console.log('[App.js] Inside CDM');
-  }
-
-  componentWillReceiveProps(nextProps) {
-    console.log('[UPDATE App.js] Inside componentWillReceiveProps');
   }
 
   // shouldComponentUpdate(nextProps, nextState) {
@@ -41,14 +36,24 @@ class App extends Component {
   //   return true;
   // }
 
-  componentWillUpdate() {
-    console.log('[UPDATE App.js] Inside componentWillUpdate');
-  }
-
   componentDidUpdate() {
     console.log('[UPDATE App.js] Inside componentDidUpdate');
   }
 
+  static getDerivedStateFromProps(nextProps, prevState) {
+    console.log(
+      '[UPDATE App.js] Found new props',
+      nextProps,
+      prevState);
+
+      return prevState;
+  }
+
+  getSnapshotBeforeUpdate() {
+    console.log(
+      "[UPDATE App.js] Inside getSnapshotBeforeUpdate"
+    );
+  }
 
   deletePersonHandler = (personIndex) => {
     // const newPersons = this.state.persons.slice();
@@ -72,16 +77,20 @@ class App extends Component {
 
   togglePersonHandler = () => {
     const show = (this.state.showPersons) ? false : true
-    this.setState((prevState, props) => { 
+    this.setState((prevState, props) => {
       return {
         showPersons: show,
-        toggleClicked: prevState.toggleClicked +1
+        toggleClicked: prevState.toggleClicked + 1
       }
     });
   }
 
   mouseLogHandler = (props) => {
     console.log('mouse!')
+  }
+
+  loginHandler = () => {
+    this.setState({ authenticated: true })
   }
 
   render() {
@@ -101,16 +110,20 @@ class App extends Component {
     }
 
     return (
-      
+
       <Wrapper>
-        <button onClick={()=> {this.setState({showPersons:true})}}>Show Persons</button>
+        <button onClick={() => { this.setState({ showPersons: true }) }}>Show Persons</button>
         <Cockpit
           showPersonms={this.state.showPersons}
           persons={this.state.persons}
           clicked={this.togglePersonHandler}
           logger={this.mouseLogHandler}
-        />
-        {persons}
+          login={this.loginHandler} />
+
+        <AuthContext.Provider value={this.state.authenticated}>
+          {persons}
+        </AuthContext.Provider>
+
       </Wrapper>
 
     );

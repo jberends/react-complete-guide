@@ -5,6 +5,8 @@ import classes from "./Person.css"
 import withClass from '../../../hoc/withClass';
 import Wrapper from '../../../hoc/Wrapper';
 
+import { AuthContext } from '../../../containers/App';
+
 class Person extends Component {
   constructor(props) {
     super(props);
@@ -28,6 +30,9 @@ class Person extends Component {
 
     return (
       <Wrapper>
+        <AuthContext.Consumer>
+          {auth => auth ? <p>I'm authenticated</p> : null}
+        </AuthContext.Consumer>
         <p onClick={this.props.click}>I'm {this.props.name} and I am {Math.floor(Math.random() * this.props.age)} year old!</p>
         <p>{this.props.children}</p>
         <input

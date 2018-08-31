@@ -31,6 +31,9 @@ const cockpit = (props) => {
         className={btnClass}
         onClick={props.clicked}
         onMouseOver={props.logger}>Show or Hide Persons</button>
+      <button
+        onClick={props.login}>Login</button>
+
      </Wrapper>
   );
 };
