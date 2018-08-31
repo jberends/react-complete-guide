@@ -6,6 +6,12 @@ import withClass from '../../../hoc/withClass';
 import Wrapper from '../../../hoc/Wrapper';
 
 class Person extends Component {
+
+  componentDidMount() {
+    console.log('CDM of Person');
+    this.inputElement.focus()
+  }
+
   render() {
     console.log('[Person.js] Inside render()');
 
@@ -13,7 +19,11 @@ class Person extends Component {
       <Wrapper>
         <p onClick={this.props.click}>I'm {this.props.name} and I am {Math.floor(Math.random() * this.props.age)} year old!</p>
         <p>{this.props.children}</p>
-        <input type="text" onChange={this.props.changed} value={this.props.name} />
+        <input
+          ref={(inp) => {this.inputElement = inp}}
+          type="text"
+          onChange={this.props.changed} 
+          value={this.props.name} />
       </Wrapper>
     );
   }
@@ -22,7 +32,7 @@ class Person extends Component {
 Person.propTypes = {
   click: PropTypes.func,
   name: PropTypes.string,
-  age:PropTypes.number,
+  age: PropTypes.number,
   changed: PropTypes.func
 };
 
